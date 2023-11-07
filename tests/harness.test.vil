@@ -1,0 +1,37 @@
+fn print_title(title) {
+    io.println();
+    io.println("========== " + title + " ==========");
+    io.println();
+}
+
+fn print_section(section) {
+    io.println(" > " + section);
+}
+
+fn log_case(case, result, expected) {
+    __logged_test_cases ??= array(0);
+    arr.push(__logged_test_cases, {case: case, result: result, expected: expected});
+}
+
+fn print_cases() {
+    rw val pad_target_len = 0;
+    each(rw val _,c : __logged_test_cases) {
+        if(pad_target_len < #c.case)
+            pad_target_len = #c.case;
+    }
+    
+    rw val passed = 0;
+    each(rw val i,c : __logged_test_cases) {
+        val title = str.rpad(c.case, " ", pad_target_len);
+        io.print("  * " + title + " -> ");
+        if(c.result == c.expected) {
+            io.println("Passed!");
+            passed++;
+        }
+        else
+            io.println("Failed! Expected " + @c.expected + " but got " + @c.result);
+    }
+    io.println(" >> Passed " + @passed + " of " + @#__logged_test_cases + " tests.");
+    io.println();
+    __logged_test_cases = array(0);
+}
