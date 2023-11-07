@@ -1,0 +1,48 @@
+#[vminit;noreg] fn __strlib_vminit() {
+    // Make sure the 'str' table exists and isn't frozen
+    str ??= {};
+    tbl.unfreeze(str);
+
+    str.num = fn(rw num, rw base=10) {
+        if(num !is Number || num == Infinity || base !is Number || base == Infinity)
+            ret nil;
+        num = math.floor(num);
+        base = math.floor(base);
+
+        val alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+        if(base < 2 || base > #alphabet)
+            ret nil;
+        if(num == 0)
+            ret "0";
+
+        rw val negative = num < 0;
+        rw val quo = math.abs(num);
+        rw val mod = 1;
+        rw val res = "";
+        while(quo > 0) {
+            mod = quo % base;
+            quo = math.floor(quo/base);
+            res = alphabet[mod] + res;
+        }
+        if(negative)
+            res = "-" + res;
+        ret res;
+    };
+
+    str.repeat = fn(rw s, rw amt) {
+        if(amt !is Number || amt == Infinity)
+            ret nil;
+        if(amt < 0)
+            ret nil;
+        amt = math.floor(amt);
+        s = @s;
+
+        rw val output = "";
+        for(rw val i = 0; i < amt; i++) {
+            output += s;
+        }
+        ret output;
+    };
+
+    tbl.freeze(str);
+}
