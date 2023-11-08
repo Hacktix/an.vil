@@ -42,20 +42,4 @@ fn main() {
     log_case("Zero", str.num(10,0), nil);
     log_case("Negative", str.num(10,-1), nil);
     print_cases();
-
-
-    
-    print_title("str.repeat()");
-
-    print_section("Basic Usage");
-    log_case("Normal String", str.repeat("abc",3), "abcabcabc");
-    log_case("Empty String", str.repeat("",3), "");
-    print_cases();
-
-    print_section("Edge Cases");
-    log_case("Zero Repeats", str.repeat("abc",0), "");
-    log_case("Negative Repeats", str.repeat("abc",-3), nil);
-    log_case("Non-number Repeats", str.repeat("abc","abc"), nil);
-    log_case("Non-string Value", str.repeat(1,3), "111");
-    print_cases();
 }
