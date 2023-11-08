@@ -4,16 +4,13 @@
     tbl.unfreeze(str);
 
     str.num = fn(rw num, rw base=10) {
-        if(num !is Number || num == Infinity || base !is Number || base == Infinity)
-            ret nil;
+        if(num !is Number || num == Infinity || base !is Number || base == Infinity) -> nil;
         num = math.floor(num);
         base = math.floor(base);
 
         val alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
-        if(base < 2 || base > #alphabet)
-            ret nil;
-        if(num == 0)
-            ret "0";
+        if(base < 2 || base > #alphabet) -> nil;
+        if(num == 0) -> "0";
 
         rw val negative = num < 0;
         rw val quo = math.abs(num);

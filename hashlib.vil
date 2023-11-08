@@ -9,8 +9,7 @@
     hash.crc8 = {
         __lut: array(256),
         from_bytearray: fn(bytes) {
-            if(bytes !is Array)
-                ret nil;
+            if(bytes !is Array) -> nil;
 
             rw val crc = 0;
             each(rw val i, b : bytes) {
