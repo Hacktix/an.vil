@@ -26,5 +26,76 @@
         ret res;
     };
 
+    str.repl = fn(rw base, pattern, repl) {
+        if(base !is String || pattern !is String) -> nil;
+        if(base == "" || pattern == "") -> base;
+
+        while(str.index_of(base, pattern) != -1) {
+            val idx = str.index_of(base, pattern);
+            base = str.sub(base, 0, #base - idx) + @repl + str.sub(base, idx + #pattern);
+        }
+        ret base;
+    };
+
+    str.cnt = fn(rw base, pattern) {
+        if(base !is String || pattern !is String) -> nil;
+        if(base == "" || pattern == "") -> 0;
+
+        rw val count = 0;
+        while(str.index_of(base, pattern) != -1) {
+            count++;
+            base = str.sub(base, str.index_of(base, pattern) + #pattern);
+        }
+        ret count;
+    };
+
+    str.enc ??= {};
+
+    str.enc.b64enc = fn(s) {
+        if(s !is String) -> nil;
+
+        val alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        rw val enc = "";
+        rw val bytes = str.bytes(s);
+
+        // Handle padding
+        val pad = #bytes % 3 == 0 ? 0 : 3 - (#bytes % 3);
+        while((#bytes % 3) != 0) arr.push(bytes, 0);
+
+        for(rw val i = 0; i < #s; i += 3) {
+            val chunk = (bytes[i] << 16) + (bytes[i+1] << 8) + bytes[i+2];
+            for(rw val j = 18; j >= 0; j -= 6) {
+                val index = (chunk >> j) & 63;
+                enc += alpha[index];
+            }
+        }
+        ret str.sub(enc, 0, pad) + str.rep("=",pad);
+    };
+
+    str.enc.b64dec = fn(s) {
+        if(s !is String) -> nil;
+
+        val alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        rw val dec = "";
+        rw val bytes = str.bytes(str.repl(s, "=", "A"));
+
+        // Handle Padding
+        val pad = #bytes % 4 == 0 ? str.cnt(s,"=") : 4 - (#bytes % 4);
+        while((#bytes % 4) != 0) arr.push(bytes, 0);
+
+        for(rw val i = 0; i < #s; i += 4) {
+            val chunk = 
+                (str.index_of(alpha, str.chr(bytes[i])) << 18) +
+                (str.index_of(alpha, str.chr(bytes[i+1])) << 12) +
+                (str.index_of(alpha, str.chr(bytes[i+2])) << 6) +
+                str.index_of(alpha, str.chr(bytes[i+3]));
+            for(rw val j = 16; j >= 0; j -= 8) {
+                val char = str.chr((chunk >> j) & 0xff);
+                dec += char;
+            }
+        }
+        ret str.sub(dec, 0, pad);
+    };
+
     tbl.freeze(str);
 }

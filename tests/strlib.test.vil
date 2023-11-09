@@ -42,4 +42,71 @@ fn main() {
     log_case("Zero", str.num(10,0), nil);
     log_case("Negative", str.num(10,-1), nil);
     print_cases();
+
+
+    
+    print_title("str.repl()");
+
+    print_section("Basic Usage");
+    log_case("Single Character Replacement", str.repl("abcd","a","b"), "bbcd");
+    log_case("Multi Character Replacement", str.repl("abcd","ab","bc"), "bccd");
+    log_case("Multi-Occurrence Replacement", str.repl("ababab","ab","bc"), "bcbcbc");
+    log_case("Empty String Replacement", str.repl("abcd","a",""), "bcd");
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("Empty String", str.repl("", "a", "b"), "");
+    log_case("Empty Pattern", str.repl("a", "", "b"), "a");
+    log_case("Non-String Base", str.repl(123, "a", "b"), nil);
+    log_case("Non-String Pattern", str.repl("a", 123, "b"), nil);
+    log_case("Non-String Replacement", str.repl("abc", "a", 123), "123bc");
+    print_cases();
+
+
+    
+    print_title("str.count()");
+
+    print_section("Basic Usage");
+    log_case("Single Character", str.cnt("abcd","a"), 1);
+    log_case("Multi-Character", str.cnt("abcd","ab"), 1);
+    log_case("Multi-Occurrence Single Character", str.cnt("ababab","a"), 3);
+    log_case("Multi-Occurrence Multi-Character", str.cnt("ababab","ab"), 3);
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("Empty String", str.cnt("","a"), 0);
+    log_case("Empty Pattern", str.cnt("abcd",""), 0);
+    log_case("Non-String Base", str.cnt(123,"a"), nil);
+    log_case("Non-String Pattern", str.cnt("abcd",123), nil);
+    print_cases();
+
+
+    
+    print_title("str.enc.b64enc()");
+
+    print_section("Basic Usage");
+    log_case("Modulo 3-Length String", str.enc.b64enc("b64enc"), "YjY0ZW5j");
+    log_case("Arbitrary String", str.enc.b64enc("b64encpads"), "YjY0ZW5jcGFkcw==");
+    log_case("Long String", str.enc.b64enc("This is some long random string to test some EVIL stuff."), "VGhpcyBpcyBzb21lIGxvbmcgcmFuZG9tIHN0cmluZyB0byB0ZXN0IHNvbWUgRVZJTCBzdHVmZi4=");
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("Empty String", str.enc.b64enc(""), "");
+    log_case("Non-String", str.enc.b64enc(123), nil);
+    print_cases();
+
+
+    
+    print_title("str.enc.b64dec()");
+
+    print_section("Basic Usage");
+    log_case("Modulo 3-Length String", str.enc.b64dec("YjY0ZW5j"), "b64enc");
+    log_case("Padded String", str.enc.b64dec("YjY0ZW5jcGFkcw=="), "b64encpads");
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("Non-explicit Padded String", str.enc.b64dec("YjY0ZW5jcGFkcw"), "b64encpads");
+    log_case("Empty String", str.enc.b64dec(""), "");
+    log_case("Non-String", str.enc.b64dec(123), nil);
+    print_cases();
 }
