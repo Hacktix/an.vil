@@ -1,0 +1,22 @@
+#include "harness.test.vil"
+#include "../arrlib.vil"
+
+fn main() {
+    print_title("arr.join()");
+
+    print_section("Basic Usage - No Delimiter");
+    log_case("Basic Array", arr.join(array() {1,2,3}), "1,2,3");
+    log_case("Single Element", arr.join(array() {1}), "1");
+    print_cases();
+
+    print_section("Basic Usage - With Delimiter");
+    log_case("Basic Array", arr.join(array() {1,2,3},"-"), "1-2-3");
+    log_case("Single Element", arr.join(array() {1}, "-"), "1");
+    log_case("Non-String Delimiter", arr.join(array() {1,2,3}, 123), "112321233");
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("Empty Array", arr.join(array(0)), "");
+    log_case("Non-Array Value", arr.join(123), nil);
+    print_cases();
+}

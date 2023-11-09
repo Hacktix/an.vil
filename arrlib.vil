@@ -1,0 +1,19 @@
+#[vminit;noreg] fn __arrlib_vminit() {
+    // Make sure the 'arr' table exists and isn't frozen
+    arr ??= {};
+    tbl.unfreeze(arr);
+
+    arr.join = fn(a,delim=',') {
+        if(a !is Array) -> nil;
+
+        rw val out = "";
+        each(rw val i,v : a) {
+            out += @v;
+            if(i < (#a - 1))
+                out += @delim;
+        }
+        ret out;
+    };
+
+    tbl.freeze(arr);
+}
