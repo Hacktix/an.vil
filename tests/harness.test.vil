@@ -24,7 +24,7 @@ fn print_cases() {
     each(rw val i,c : __logged_test_cases) {
         val title = str.rpad(c.case, " ", pad_target_len);
         io.print("  * " + title + " -> ");
-        if(c.result == c.expected) {
+        if(equals(c.result, c.expected)) {
             io.println("Passed!");
             passed++;
         }
@@ -34,4 +34,20 @@ fn print_cases() {
     io.println(" >> Passed " + @passed + " of " + @#__logged_test_cases + " tests.");
     io.println();
     __logged_test_cases = array(0);
+}
+
+fn equals(a,b) {
+    if(typeof(a) != typeof(b)) -> false;
+
+    if(a is Array) -> compare_array(a,b);
+    ret a == b;
+}
+
+fn compare_array(a, b) {
+    if(a !is Array || b !is Array) -> false;
+    if(#a != #b) -> false;
+    each(rw val i,v : a) {
+        if(v != b[i]) -> false;
+    }
+    ret true;
 }
