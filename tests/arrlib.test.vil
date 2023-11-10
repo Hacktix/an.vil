@@ -51,4 +51,21 @@ fn main() {
     log_case("Non-Boolean Filter Return - Zero", arr.filter(array() {1,2,3}, fn() -> 0), array(0));
     log_case("Non-Boolean Filter Return - Any", arr.filter(array() {1,2,3}, fn() -> "anc"), array() {1,2,3});
     print_cases();
+
+
+
+    print_title("arr.reduce()");
+
+    print_section("Basic Usage");
+    log_case("No initial value", arr.reduce(array() {1,2,3}, fn(a,c) -> a+c), 6);
+    log_case("With initial value", arr.reduce(array() {1,2,3}, fn(a,c) -> a+c, 1), 7);
+    log_case("With initial & index", arr.reduce(array() {1,2,3}, fn(a,c,i) -> a+c+i, 1), 10);
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("Empty Array without initial", arr.reduce(array(0), fn() -> nil), nil);
+    log_case("Empty Array with initial", arr.reduce(array(0), fn() -> nil, 123), 123);
+    log_case("Non-Array Value", arr.reduce(123, fn() -> nil, 123), nil);
+    log_case("Non-Function Processor", arr.reduce(array() {1,2,3}, 123, 123), nil);
+    print_cases();
 }

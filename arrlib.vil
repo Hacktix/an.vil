@@ -35,5 +35,17 @@
         ret res;
     };
 
+    arr.reduce = fn(a,func,init) {
+        if(a !is Array || func !is Function) -> nil;
+        if(#a == 0) -> init;
+
+        rw val acc = (init == nil) ? a[0] : init;
+        val startIdx = (init == nil) ? 1 : 0;
+        for(rw val i = startIdx; i < #a; i++) {
+            acc = func(acc,a[i],i);
+        }
+        ret acc;
+    };
+
     tbl.freeze(arr);
 }
