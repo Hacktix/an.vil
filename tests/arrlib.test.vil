@@ -19,4 +19,19 @@ fn main() {
     log_case("Empty Array", arr.join(array(0)), "");
     log_case("Non-Array Value", arr.join(123), nil);
     print_cases();
+
+
+
+    print_title("arr.map()");
+
+    print_section("Basic Usage");
+    log_case("Basic Array - Value Only", arr.map(array() {1,2,3}, fn(v) -> v+1), array() {2,3,4});
+    log_case("Basic Array - Value & Index", arr.map(array() {1,2,3}, fn(v,i) -> v+i), array() {1,3,5});
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("Empty Array", arr.map(array(0), fn(v) -> v+1), array(0));
+    log_case("Non-Array Value", arr.map(123, fn(v) -> v+1), nil);
+    log_case("Non-Function Processor", arr.map(array(0), 123, nil));
+    print_cases();
 }
