@@ -34,4 +34,21 @@ fn main() {
     log_case("Non-Array Value", arr.map(123, fn(v) -> v+1), nil);
     log_case("Non-Function Processor", arr.map(array(0), 123, nil));
     print_cases();
+
+
+
+    print_title("arr.filter()");
+
+    print_section("Basic Usage");
+    log_case("Basic Array - Value Only", arr.filter(array() {1,2,3}, fn(v) -> v < 3), array() {1,2});
+    log_case("Basic Array - Value & Index", arr.filter(array() {1,2,3}, fn(v,i) -> v + i < 4), array() {1,2});
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("Empty Array", arr.filter(array(0), fn(v) -> v < 3), array(0));
+    log_case("Non-Array Value", arr.filter(123, fn(v) -> v < 3), nil);
+    log_case("Non-Function Filter", arr.filter(array() {1,2,3}, 123), nil);
+    log_case("Non-Boolean Filter Return - Zero", arr.filter(array() {1,2,3}, fn() -> 0), array(0));
+    log_case("Non-Boolean Filter Return - Any", arr.filter(array() {1,2,3}, fn() -> "anc"), array() {1,2,3});
+    print_cases();
 }
