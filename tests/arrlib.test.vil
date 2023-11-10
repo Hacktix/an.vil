@@ -68,4 +68,17 @@ fn main() {
     log_case("Non-Array Value", arr.reduce(123, fn() -> nil, 123), nil);
     log_case("Non-Function Processor", arr.reduce(array() {1,2,3}, 123, 123), nil);
     print_cases();
+
+
+
+    print_title("arr.reverse()");
+
+    print_section("Basic Usage");
+    log_case("Basic Array", arr.reverse(array() {1,2,3}), array() {3,2,1});
+    log_case("Empty Array", arr.reverse(array(0)), array(0));
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("Non-Array", arr.reverse(123), nil);
+    print_cases();
 }

@@ -47,5 +47,15 @@
         ret acc;
     };
 
+    arr.reverse = fn(a) {
+        if(a !is Array) -> nil;
+
+        val res = array(0);
+        for(rw val i = #a - 1; i >= 0; i--) {
+            arr.push(res, a[i]);
+        }
+        ret res;
+    };
+
     tbl.freeze(arr);
 }
