@@ -57,5 +57,20 @@
         ret res;
     };
 
+    arr.slice = fn(a,rw start,rw end) {
+        if(start == nil) start = 0;
+        if(end == nil) end = #a;
+
+        if(a !is Array || start !is Number || end !is Number) -> nil;
+        if(#a == 0) -> array(0);
+        if(start < 0 || start >= #a || end < 1 || end > #a) -> nil;
+
+        val res = array(0);
+        for(rw val i = start; i < end; i++) {
+            arr.push(res,a[i]);
+        }
+        ret res;
+    };
+
     tbl.freeze(arr);
 }

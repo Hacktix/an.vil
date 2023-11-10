@@ -81,4 +81,24 @@ fn main() {
     print_section("Edge Cases");
     log_case("Non-Array", arr.reverse(123), nil);
     print_cases();
+
+
+
+    print_title("arr.slice()");
+
+    print_section("Basic Usage");
+    log_case("No slice parameters", arr.slice(array() {1,2,3}), array() {1,2,3});
+    log_case("Only slice start", arr.slice(array() {1,2,3}, 1), array() {2,3});
+    log_case("Only slice end", arr.slice(array() {1,2,3}, nil, 2), array() {1,2});
+    log_case("Slice start & end", arr.slice(array() {1,2,3}, 1, 2), array() {2});
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("Empty Array", arr.slice(array(0)), array(0));
+    log_case("Start = End", arr.slice(array() {1,2,3}, 1, 1), array(0));
+    log_case("Negative Start", arr.slice(array() {1,2,3}, -1), nil);
+    log_case("Greater-than-length Start", arr.slice(array() {1,2,3}, 5), nil);
+    log_case("Negative End", arr.slice(array() {1,2,3}, 0, -1), nil);
+    log_case("Greater-than-length End", arr.slice(array() {1,2,3}, 0, 5), nil);
+    print_cases();
 }
