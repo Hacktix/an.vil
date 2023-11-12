@@ -5,8 +5,8 @@ fn main() {
     print_title("hash.crc8.from_bytearray()");
 
     print_section("Basic Usage");
-    log_case("Single Byte", hash.crc8.from_bytearray(array() {0xff}), 0xf3);
-    log_case("Multiple Bytes", hash.crc8.from_bytearray(array() {0xca, 0xfe}), 0x9b);
+    log_case("Single Byte", hash.crc8.from_bytearray(array {0xff}), 0xf3);
+    log_case("Multiple Bytes", hash.crc8.from_bytearray(array {0xca, 0xfe}), 0x9b);
     print_cases();
 
     print_section("Edge Cases");

@@ -5,14 +5,14 @@ fn main() {
     print_title("arr.join()");
 
     print_section("Basic Usage - No Delimiter");
-    log_case("Basic Array", arr.join(array() {1,2,3}), "1,2,3");
-    log_case("Single Element", arr.join(array() {1}), "1");
+    log_case("Basic Array", arr.join(array {1,2,3}), "1,2,3");
+    log_case("Single Element", arr.join(array {1}), "1");
     print_cases();
 
     print_section("Basic Usage - With Delimiter");
-    log_case("Basic Array", arr.join(array() {1,2,3},"-"), "1-2-3");
-    log_case("Single Element", arr.join(array() {1}, "-"), "1");
-    log_case("Non-String Delimiter", arr.join(array() {1,2,3}, 123), "112321233");
+    log_case("Basic Array", arr.join(array {1,2,3},"-"), "1-2-3");
+    log_case("Single Element", arr.join(array {1}, "-"), "1");
+    log_case("Non-String Delimiter", arr.join(array {1,2,3}, 123), "112321233");
     print_cases();
 
     print_section("Edge Cases");
@@ -25,8 +25,8 @@ fn main() {
     print_title("arr.map()");
 
     print_section("Basic Usage");
-    log_case("Basic Array - Value Only", arr.map(array() {1,2,3}, fn(v) -> v+1), array() {2,3,4});
-    log_case("Basic Array - Value & Index", arr.map(array() {1,2,3}, fn(v,i) -> v+i), array() {1,3,5});
+    log_case("Basic Array - Value Only", arr.map(array {1,2,3}, fn(v) -> v+1), array {2,3,4});
+    log_case("Basic Array - Value & Index", arr.map(array {1,2,3}, fn(v,i) -> v+i), array {1,3,5});
     print_cases();
 
     print_section("Edge Cases");
@@ -40,16 +40,16 @@ fn main() {
     print_title("arr.filter()");
 
     print_section("Basic Usage");
-    log_case("Basic Array - Value Only", arr.filter(array() {1,2,3}, fn(v) -> v < 3), array() {1,2});
-    log_case("Basic Array - Value & Index", arr.filter(array() {1,2,3}, fn(v,i) -> v + i < 4), array() {1,2});
+    log_case("Basic Array - Value Only", arr.filter(array {1,2,3}, fn(v) -> v < 3), array {1,2});
+    log_case("Basic Array - Value & Index", arr.filter(array {1,2,3}, fn(v,i) -> v + i < 4), array {1,2});
     print_cases();
 
     print_section("Edge Cases");
     log_case("Empty Array", arr.filter(array(0), fn(v) -> v < 3), array(0));
     log_case("Non-Array Value", arr.filter(123, fn(v) -> v < 3), nil);
-    log_case("Non-Function Filter", arr.filter(array() {1,2,3}, 123), nil);
-    log_case("Non-Boolean Filter Return - Zero", arr.filter(array() {1,2,3}, fn() -> 0), array(0));
-    log_case("Non-Boolean Filter Return - Any", arr.filter(array() {1,2,3}, fn() -> "anc"), array() {1,2,3});
+    log_case("Non-Function Filter", arr.filter(array {1,2,3}, 123), nil);
+    log_case("Non-Boolean Filter Return - Zero", arr.filter(array {1,2,3}, fn() -> 0), array(0));
+    log_case("Non-Boolean Filter Return - Any", arr.filter(array {1,2,3}, fn() -> "anc"), array {1,2,3});
     print_cases();
 
 
@@ -57,16 +57,16 @@ fn main() {
     print_title("arr.reduce()");
 
     print_section("Basic Usage");
-    log_case("No initial value", arr.reduce(array() {1,2,3}, fn(a,c) -> a+c), 6);
-    log_case("With initial value", arr.reduce(array() {1,2,3}, fn(a,c) -> a+c, 1), 7);
-    log_case("With initial & index", arr.reduce(array() {1,2,3}, fn(a,c,i) -> a+c+i, 1), 10);
+    log_case("No initial value", arr.reduce(array {1,2,3}, fn(a,c) -> a+c), 6);
+    log_case("With initial value", arr.reduce(array {1,2,3}, fn(a,c) -> a+c, 1), 7);
+    log_case("With initial & index", arr.reduce(array {1,2,3}, fn(a,c,i) -> a+c+i, 1), 10);
     print_cases();
 
     print_section("Edge Cases");
     log_case("Empty Array without initial", arr.reduce(array(0), fn() -> nil), nil);
     log_case("Empty Array with initial", arr.reduce(array(0), fn() -> nil, 123), 123);
     log_case("Non-Array Value", arr.reduce(123, fn() -> nil, 123), nil);
-    log_case("Non-Function Processor", arr.reduce(array() {1,2,3}, 123, 123), nil);
+    log_case("Non-Function Processor", arr.reduce(array {1,2,3}, 123, 123), nil);
     print_cases();
 
 
@@ -74,7 +74,7 @@ fn main() {
     print_title("arr.reverse()");
 
     print_section("Basic Usage");
-    log_case("Basic Array", arr.reverse(array() {1,2,3}), array() {3,2,1});
+    log_case("Basic Array", arr.reverse(array {1,2,3}), array {3,2,1});
     log_case("Empty Array", arr.reverse(array(0)), array(0));
     print_cases();
 
@@ -87,18 +87,18 @@ fn main() {
     print_title("arr.slice()");
 
     print_section("Basic Usage");
-    log_case("No slice parameters", arr.slice(array() {1,2,3}), array() {1,2,3});
-    log_case("Only slice start", arr.slice(array() {1,2,3}, 1), array() {2,3});
-    log_case("Only slice end", arr.slice(array() {1,2,3}, nil, 2), array() {1,2});
-    log_case("Slice start & end", arr.slice(array() {1,2,3}, 1, 2), array() {2});
+    log_case("No slice parameters", arr.slice(array {1,2,3}), array {1,2,3});
+    log_case("Only slice start", arr.slice(array {1,2,3}, 1), array {2,3});
+    log_case("Only slice end", arr.slice(array {1,2,3}, nil, 2), array {1,2});
+    log_case("Slice start & end", arr.slice(array {1,2,3}, 1, 2), array {2});
     print_cases();
 
     print_section("Edge Cases");
     log_case("Empty Array", arr.slice(array(0)), array(0));
-    log_case("Start = End", arr.slice(array() {1,2,3}, 1, 1), array(0));
-    log_case("Negative Start", arr.slice(array() {1,2,3}, -1), nil);
-    log_case("Greater-than-length Start", arr.slice(array() {1,2,3}, 5), nil);
-    log_case("Negative End", arr.slice(array() {1,2,3}, 0, -1), nil);
-    log_case("Greater-than-length End", arr.slice(array() {1,2,3}, 0, 5), nil);
+    log_case("Start = End", arr.slice(array {1,2,3}, 1, 1), array(0));
+    log_case("Negative Start", arr.slice(array {1,2,3}, -1), nil);
+    log_case("Greater-than-length Start", arr.slice(array {1,2,3}, 5), nil);
+    log_case("Negative End", arr.slice(array {1,2,3}, 0, -1), nil);
+    log_case("Greater-than-length End", arr.slice(array {1,2,3}, 0, 5), nil);
     print_cases();
 }
