@@ -69,7 +69,7 @@
                 enc += alpha[index];
             }
         }
-        ret str.sub(enc, 0, #enc - pad) + str.rep("=",pad);
+        ret str.sub(enc, 0, #enc - pad) + str.repeat("=",pad);
     };
 
     str.enc.b64dec = fn(s) {
