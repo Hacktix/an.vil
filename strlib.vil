@@ -92,5 +92,19 @@
         ret "\x001b[38;2;" + @r + ";" + @g + ";" + @b + "m" + s + "\x001b[0m";
     };
 
+    str.fmt ??= {};
+
+    str.fmt.bold = fn(s) {
+        ret "\x001b[1m" + s + "\x001b[21m";
+    };
+
+    str.fmt.italic = fn(s) {
+        ret "\x001b[3m" + s + "\x001b[23m";
+    };
+
+    str.fmt.underline = fn(s) {
+        ret "\x001b[4m" + s + "\x001b[24m";
+    };
+
     tbl.freeze(str);
 }
