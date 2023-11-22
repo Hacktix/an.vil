@@ -86,9 +86,9 @@
         ret str.sub(dec, 0, #dec - pad);
     };
 
-    str.color ??= {};
+    str.clr ??= {};
 
-    str.color.rgb = fn(s,r,g,b) {
+    str.clr.rgb = fn(s,r,g,b) {
         ret "\x001b[38;2;" + @r + ";" + @g + ";" + @b + "m" + s + "\x001b[0m";
     };
 

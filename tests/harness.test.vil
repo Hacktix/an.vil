@@ -1,6 +1,6 @@
 fn print_title(title) {
     io.println();
-    io.println(str.color.rgb("========== " + title + " ==========",0,255,0));
+    io.println(str.clr.rgb("========== " + title + " ==========",0,255,0));
     io.println();
 }
 
@@ -19,19 +19,19 @@ fn end_tests() {
         g = 0;
     }
 
-    io.println(str.color.rgb("==========================================",r,g,0));
-    io.println(str.color.rgb("# ALL TESTS COMPLETED",r,g,0));
-    io.println(str.color.rgb("==========================================",r,g,0));
+    io.println(str.clr.rgb("==========================================",r,g,0));
+    io.println(str.clr.rgb("# ALL TESTS COMPLETED",r,g,0));
+    io.println(str.clr.rgb("==========================================",r,g,0));
 
-    if(__total_tests.failed == 0) io.println(str.color.rgb("# All tests completed successfully.",r,g,0));
-    else io.println(str.color.rgb("# Failed " + @__total_tests.failed + " out of " + @__total_tests.total + " cases",r,g,0));
+    if(__total_tests.failed == 0) io.println(str.clr.rgb("# All tests completed successfully.",r,g,0));
+    else io.println(str.clr.rgb("# Failed " + @__total_tests.failed + " out of " + @__total_tests.total + " cases",r,g,0));
 
-    io.println(str.color.rgb("==========================================",r,g,0));
+    io.println(str.clr.rgb("==========================================",r,g,0));
     io.println();
 }
 
 fn print_section(section) {
-    io.println(str.color.rgb(" > " + section,200,200,0));
+    io.println(str.clr.rgb(" > " + section,200,200,0));
 }
 
 fn log_case(case, result, expected) {
@@ -60,7 +60,7 @@ fn print_cases() {
             __total_tests.failed++;
         }
     }
-    io.println(str.color.rgb(" >> Passed " + @passed + " of " + @#__logged_test_cases + " tests.",150,150,150));
+    io.println(str.clr.rgb(" >> Passed " + @passed + " of " + @#__logged_test_cases + " tests.",150,150,150));
     io.println();
     __logged_test_cases = array(0);
 }
