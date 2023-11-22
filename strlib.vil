@@ -86,5 +86,11 @@
         ret str.sub(dec, 0, #dec - pad);
     };
 
+    str.color ??= {};
+
+    str.color.rgb = fn(s,r,g,b) {
+        ret "\x001b[38;2;" + @r + ";" + @g + ";" + @b + "m" + s + "\x001b[0m";
+    };
+
     tbl.freeze(str);
 }
