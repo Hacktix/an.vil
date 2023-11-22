@@ -47,25 +47,6 @@ fn main() {
 
 
     
-    print_title("str.repl()");
-
-    print_section("Basic Usage");
-    log_case("Single Character Replacement", str.repl("abcd","a","b"), "bbcd");
-    log_case("Multi Character Replacement", str.repl("abcd","ab","bc"), "bccd");
-    log_case("Multi-Occurrence Replacement", str.repl("ababab","ab","bc"), "bcbcbc");
-    log_case("Empty String Replacement", str.repl("abcd","a",""), "bcd");
-    print_cases();
-
-    print_section("Edge Cases");
-    log_case("Empty String", str.repl("", "a", "b"), "");
-    log_case("Empty Pattern", str.repl("a", "", "b"), "a");
-    log_case("Non-String Base", str.repl(123, "a", "b"), nil);
-    log_case("Non-String Pattern", str.repl("a", 123, "b"), nil);
-    log_case("Non-String Replacement", str.repl("abc", "a", 123), "123bc");
-    print_cases();
-
-
-    
     print_title("str.count()");
 
     print_section("Basic Usage");

@@ -26,17 +26,6 @@
         ret res;
     };
 
-    str.repl = fn(rw base, pattern, repl) {
-        if(base !is String || pattern !is String) -> nil;
-        if(base == "" || pattern == "") -> base;
-
-        while(str.index_of(base, pattern) != -1) {
-            val idx = str.index_of(base, pattern);
-            base = str.sub(base, 0, idx) + @repl + str.sub(base, idx + #pattern);
-        }
-        ret base;
-    };
-
     str.cnt = fn(rw base, pattern) {
         if(base !is String || pattern !is String) -> nil;
         if(base == "" || pattern == "") -> 0;
@@ -77,7 +66,7 @@
 
         val alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
         rw val dec = "";
-        rw val bytes = str.bytes(str.repl(s, "=", "A"));
+        rw val bytes = str.bytes(str.replace(s, "=", "A"));
 
         // Handle Padding
         val pad = #bytes % 4 == 0 ? str.cnt(s,"=") : 4 - (#bytes % 4);
