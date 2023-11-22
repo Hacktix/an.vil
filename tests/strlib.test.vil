@@ -2,6 +2,8 @@
 #include "../strlib.vil"
 
 fn main() {
+    start_tests();
+
     print_title("str.num()");
 
     print_section("Basic Usage - No Base Parameter");
@@ -109,4 +111,6 @@ fn main() {
     log_case("Empty String", str.enc.b64dec(""), "");
     log_case("Non-String", str.enc.b64dec(123), nil);
     print_cases();
+
+    end_tests();
 }

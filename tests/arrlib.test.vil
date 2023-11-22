@@ -2,6 +2,8 @@
 #include "../arrlib.vil"
 
 fn main() {
+    start_tests();
+
     print_title("arr.join()");
 
     print_section("Basic Usage - No Delimiter");
@@ -101,4 +103,6 @@ fn main() {
     log_case("Negative End", arr.slice(array {1,2,3}, 0, -1), nil);
     log_case("Greater-than-length End", arr.slice(array {1,2,3}, 0, 5), nil);
     print_cases();
+
+    end_tests();
 }

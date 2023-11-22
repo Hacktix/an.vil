@@ -4,12 +4,28 @@ fn print_title(title) {
     io.println();
 }
 
+fn start_tests() {
+    __total_tests ??= {
+        total: 0,
+        failed: 0
+    };
+}
+
+fn end_tests() {
+    io.println("==========================================");
+    io.println("# ALL TESTS COMPLETED");
+    io.println("==========================================");
+    io.println("# Failed " + @__total_tests.failed + " out of " + @__total_tests.total + " cases");
+    io.println("==========================================");
+}
+
 fn print_section(section) {
     io.println(" > " + section);
 }
 
 fn log_case(case, result, expected) {
     __logged_test_cases ??= array(0);
+    __total_tests.total++;
     arr.push(__logged_test_cases, {case: case, result: result, expected: expected});
 }
 
@@ -28,8 +44,10 @@ fn print_cases() {
             io.println("Passed!");
             passed++;
         }
-        else
+        else {
             io.println("Failed! Expected " + @c.expected + " but got " + @c.result);
+            __total_tests.failed++;
+        }
     }
     io.println(" >> Passed " + @passed + " of " + @#__logged_test_cases + " tests.");
     io.println();

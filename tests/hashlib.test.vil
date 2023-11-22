@@ -2,6 +2,8 @@
 #include "../hashlib.vil"
 
 fn main() {
+    start_tests();
+
     print_title("hash.crc8.from_bytearray()");
 
     print_section("Basic Usage");
@@ -27,4 +29,6 @@ fn main() {
     log_case("Empty String", hash.crc8.from_string(""), 0);
     log_case("Non-String", hash.crc8.from_string(123), nil);
     print_cases();
+
+    end_tests();
 }
