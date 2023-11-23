@@ -93,5 +93,22 @@ fn main() {
     log_case("Non-String", str.enc.b64dec(123), nil);
     print_cases();
 
+
+    
+    print_title("str.clr.rgb()");
+
+    print_section("Basic Usage");
+    log_case("Basic String", str.clr.rgb("abc", 0, 0, 0), "\x001b[38;2;0;0;0mabc\x001b[0m");
+    log_case("Empty String", str.clr.rgb("", 0, 0, 0), "");
+    log_case("Non-string value", str.clr.rgb(123, 100, 100, 100), "\x001b[38;2;100;100;100m123\x001b[0m");
+    log_case("Multiple Colors", str.clr.rgb("a" + str.clr.rgb("b", 255, 255, 255) + "c", 0, 0, 0), "\x001b[38;2;0;0;0ma\x001b[38;2;255;255;255mb\x001b[0m\x001b[38;2;0;0;0mc\x001b[0m");
+    print_cases();
+
+    print_section("Edge Cases");
+    log_case("RGB > 255", str.clr.rgb("abc", 1000, 1000, 1000), "abc");
+    log_case("RGB < 0", str.clr.rgb("abc", -1, -2, -3), "abc");
+    log_case("Non-number RGB", str.clr.rgb("abc", "def", "ghi", "jkl"), "abc");
+    print_cases();
+
     end_tests();
 }

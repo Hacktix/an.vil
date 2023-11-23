@@ -88,8 +88,17 @@
 
     str.clr ??= {};
 
-    str.clr.rgb = fn(s,r,g,b) {
-        ret "\x001b[38;2;" + @r + ";" + @g + ";" + @b + "m" + s + "\x001b[0m";
+    str.clr.rgb = fn(rw s,r,g,b) {
+        s = @s;
+
+        if(r !is Number || g !is Number || b !is Number) -> s;
+        if(s == "") -> "";
+        if(r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0) -> s;
+
+        val prefix = "\x001b[38;2;" + @r + ";" + @g + ";" + @b + "m";
+        val suffix = "\x001b[0m";
+        s = str.replace(s, suffix, suffix+prefix);
+        ret prefix + s + suffix;
     };
 
     str.fmt ??= {};
