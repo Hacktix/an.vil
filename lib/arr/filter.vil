@@ -1,0 +1,9 @@
+ret fn(a,filter) {
+    if(a !is Array || filter !is Function) -> nil;
+
+    val res = array(0);
+    each(rw val i,v : a) {
+        if(filter(v,i)) arr.push(res, v);
+    }
+    ret res;
+};

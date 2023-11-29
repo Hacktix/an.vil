@@ -1,0 +1,104 @@
+val anvil = dofile("../init.vil");
+val harness = require("harness");
+
+harness.print_title("anvil.arr.join()");
+
+harness.print_section("Basic Usage - No Delimiter");
+harness.log_case("Basic Array", anvil.arr.join(array {1,2,3}), "1,2,3");
+harness.log_case("Single Element", anvil.arr.join(array {1}), "1");
+harness.print_cases();
+
+harness.print_section("Basic Usage - With Delimiter");
+harness.log_case("Basic Array", anvil.arr.join(array {1,2,3},"-"), "1-2-3");
+harness.log_case("Single Element", anvil.arr.join(array {1}, "-"), "1");
+harness.log_case("Non-String Delimiter", anvil.arr.join(array {1,2,3}, 123), "112321233");
+harness.print_cases();
+
+harness.print_section("Edge Cases");
+harness.log_case("Empty Array", anvil.arr.join(array(0)), "");
+harness.log_case("Non-Array Value", anvil.arr.join(123), nil);
+harness.print_cases();
+
+
+
+harness.print_title("anvil.arr.map()");
+
+harness.print_section("Basic Usage");
+harness.log_case("Basic Array - Value Only", anvil.arr.map(array {1,2,3}, fn(v) -> v+1), array {2,3,4});
+harness.log_case("Basic Array - Value & Index", anvil.arr.map(array {1,2,3}, fn(v,i) -> v+i), array {1,3,5});
+harness.print_cases();
+
+harness.print_section("Edge Cases");
+harness.log_case("Empty Array", anvil.arr.map(array(0), fn(v) -> v+1), array(0));
+harness.log_case("Non-Array Value", anvil.arr.map(123, fn(v) -> v+1), nil);
+harness.log_case("Non-Function Processor", anvil.arr.map(array(0), 123, nil));
+harness.print_cases();
+
+
+
+harness.print_title("anvil.arr.filter()");
+
+harness.print_section("Basic Usage");
+harness.log_case("Basic Array - Value Only", anvil.arr.filter(array {1,2,3}, fn(v) -> v < 3), array {1,2});
+harness.log_case("Basic Array - Value & Index", anvil.arr.filter(array {1,2,3}, fn(v,i) -> v + i < 4), array {1,2});
+harness.print_cases();
+
+harness.print_section("Edge Cases");
+harness.log_case("Empty Array", anvil.arr.filter(array(0), fn(v) -> v < 3), array(0));
+harness.log_case("Non-Array Value", anvil.arr.filter(123, fn(v) -> v < 3), nil);
+harness.log_case("Non-Function Filter", anvil.arr.filter(array {1,2,3}, 123), nil);
+harness.log_case("Non-Boolean Filter Return - Zero", anvil.arr.filter(array {1,2,3}, fn() -> 0), array(0));
+harness.log_case("Non-Boolean Filter Return - Any", anvil.arr.filter(array {1,2,3}, fn() -> "anc"), array {1,2,3});
+harness.print_cases();
+
+
+
+harness.print_title("anvil.arr.reduce()");
+
+harness.print_section("Basic Usage");
+harness.log_case("No initial value", anvil.arr.reduce(array {1,2,3}, fn(a,c) -> a+c), 6);
+harness.log_case("With initial value", anvil.arr.reduce(array {1,2,3}, fn(a,c) -> a+c, 1), 7);
+harness.log_case("With initial & index", anvil.arr.reduce(array {1,2,3}, fn(a,c,i) -> a+c+i, 1), 10);
+harness.print_cases();
+
+harness.print_section("Edge Cases");
+harness.log_case("Empty Array without initial", anvil.arr.reduce(array(0), fn() -> nil), nil);
+harness.log_case("Empty Array with initial", anvil.arr.reduce(array(0), fn() -> nil, 123), 123);
+harness.log_case("Non-Array Value", anvil.arr.reduce(123, fn() -> nil, 123), nil);
+harness.log_case("Non-Function Processor", anvil.arr.reduce(array {1,2,3}, 123, 123), nil);
+harness.print_cases();
+
+
+
+harness.print_title("anvil.arr.reverse()");
+
+harness.print_section("Basic Usage");
+harness.log_case("Basic Array", anvil.arr.reverse(array {1,2,3}), array {3,2,1});
+harness.log_case("Empty Array", anvil.arr.reverse(array(0)), array(0));
+harness.print_cases();
+
+harness.print_section("Edge Cases");
+harness.log_case("Non-Array", anvil.arr.reverse(123), nil);
+harness.print_cases();
+
+
+
+harness.print_title("anvil.arr.slice()");
+
+harness.print_section("Basic Usage");
+harness.log_case("No slice parameters", anvil.arr.slice(array {1,2,3}), array {1,2,3});
+harness.log_case("Only slice start", anvil.arr.slice(array {1,2,3}, 1), array {2,3});
+harness.log_case("Only slice end", anvil.arr.slice(array {1,2,3}, nil, 2), array {1,2});
+harness.log_case("Slice start & end", anvil.arr.slice(array {1,2,3}, 1, 2), array {2});
+harness.print_cases();
+
+harness.print_section("Edge Cases");
+harness.log_case("Empty Array", anvil.arr.slice(array(0)), array(0));
+harness.log_case("Start = End", anvil.arr.slice(array {1,2,3}, 1, 1), array(0));
+harness.log_case("Negative Start", anvil.arr.slice(array {1,2,3}, -1), nil);
+harness.log_case("Greater-than-length Start", anvil.arr.slice(array {1,2,3}, 5), nil);
+harness.log_case("Negative End", anvil.arr.slice(array {1,2,3}, 0, -1), nil);
+harness.log_case("Greater-than-length End", anvil.arr.slice(array {1,2,3}, 0, 5), nil);
+harness.print_cases();
+
+harness.end_tests();

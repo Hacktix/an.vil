@@ -1,0 +1,8 @@
+ret {
+    filter: require("filter"),
+    join: require("join"),
+    map: require("map"),
+    reduce: require("reduce"),
+    reverse: require("reverse"),
+    slice: require("slice")
+};

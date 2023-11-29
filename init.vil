@@ -1,3 +1,4 @@
 ret {
-    str: require("lib.str")
+    str: require("lib.str"),
+    arr: require("lib.arr")
 };

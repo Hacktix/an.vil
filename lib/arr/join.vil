@@ -1,0 +1,11 @@
+ret fn(a,delim=',') {
+    if(a !is Array) -> nil;
+
+    rw val out = "";
+    each(rw val i,v : a) {
+        out += @v;
+        if(i < (#a - 1))
+            out += @delim;
+    }
+    ret out;
+};
