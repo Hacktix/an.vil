@@ -1,0 +1,7 @@
+ret {
+    clr: require("clr"),
+    enc: require("enc"),
+    fmt: require("fmt"),
+    cnt: require("cnt"),
+    num: require("num")
+};

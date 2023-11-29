@@ -1,0 +1,73 @@
+val clr = dofile("../lib/str/clr/init.vil");
+val fmt = dofile("../lib/str/fmt/init.vil");
+
+val TITLE_RGB = array() {0, 255, 0};
+val SECTION_RGB = array() {200, 200, 0};
+val SECTION_END_RGB = array() {150, 150, 150};
+
+rw val total_tests = 0;
+rw val failed_tests = 0;
+rw val logged_test_cases = array(0);
+
+loc fn print_title(title) {
+    io.println();
+    io.println(clr.rgb("========== " + fmt.underline(title) + " ==========", TITLE_RGB[0], TITLE_RGB[1], TITLE_RGB[2]));
+    io.println();
+}
+
+loc fn print_section(section) {
+    io.println(clr.rgb(" > " + section, SECTION_RGB[0], SECTION_RGB[1], SECTION_RGB[2]));
+}
+
+loc fn log_case(case, result, expected) {
+    total_tests++;
+    arr.push(logged_test_cases, {case: case, result: result, expected: expected});
+}
+
+loc fn equals(a,b) {
+    if(typeof(a) != typeof(b)) -> false;
+
+    if(a is Array) -> compare_array(a,b);
+    ret a == b;
+}
+
+loc fn compare_array(a, b) {
+    if(a !is Array || b !is Array) -> false;
+    if(#a != #b) -> false;
+    each(rw val i,v : a) {
+        if(v != b[i]) -> false;
+    }
+    ret true;
+}
+
+loc fn print_cases() {
+    rw val pad_target_len = 0;
+    each(rw val _,c : logged_test_cases) {
+        if(pad_target_len < #c.case)
+            pad_target_len = #c.case;
+    }
+    
+    rw val passed = 0;
+    each(rw val i,c : logged_test_cases) {
+        val title = str.rpad(c.case, " ", pad_target_len);
+        io.print("  * " + title + " -> ");
+        if(equals(c.result, c.expected)) {
+            io.println("Passed!");
+            passed++;
+        }
+        else {
+            io.println("Failed! Expected " + @c.expected + " but got " + @c.result);
+            failed_tests++;
+        }
+    }
+    io.println(fmt.italic(clr.rgb(" >> Passed " + @passed + " of " + @#logged_test_cases + " tests.", SECTION_END_RGB[0], SECTION_END_RGB[1], SECTION_END_RGB[2])));
+    io.println();
+    logged_test_cases = array(0);
+}
+
+ret {
+    print_title: print_title,
+    print_section: print_section,
+    log_case: log_case,
+    print_cases: print_cases
+};

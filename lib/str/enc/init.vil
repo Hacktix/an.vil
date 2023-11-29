@@ -1,0 +1,4 @@
+ret {
+    b64dec: require("b64dec"),
+    b64enc: require("b64enc")
+};

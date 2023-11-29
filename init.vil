@@ -1,0 +1,3 @@
+ret {
+    str: require("lib.str")
+};

@@ -1,0 +1,5 @@
+ret {
+    bold: require("bold"),
+    italic: require("italic"),
+    underline: require("underline")
+};

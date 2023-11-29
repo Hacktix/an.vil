@@ -1,0 +1,11 @@
+ret fn(rw base, pattern) {
+    if(base !is String || pattern !is String) -> nil;
+    if(base == "" || pattern == "") -> 0;
+
+    rw val count = 0;
+    while(str.index_of(base, pattern) != -1) {
+        count++;
+        base = str.sub(base, str.index_of(base, pattern) + #pattern);
+    }
+    ret count;
+};

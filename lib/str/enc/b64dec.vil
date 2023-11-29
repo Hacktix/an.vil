@@ -1,0 +1,26 @@
+val cnt = dofile("../cnt.vil");
+
+ret fn(s) {
+    if(s !is String) -> nil;
+
+    val alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    rw val dec = "";
+    rw val bytes = str.bytes(str.replace(s, "=", "A"));
+
+    // Handle Padding
+    val pad = #bytes % 4 == 0 ? cnt(s,"=") : 4 - (#bytes % 4);
+    while((#bytes % 4) != 0) arr.push(bytes, 0);
+
+    for(rw val i = 0; i < #s; i += 4) {
+        val chunk = 
+            (str.index_of(alpha, str.chr(bytes[i])) << 18) +
+            (str.index_of(alpha, str.chr(bytes[i+1])) << 12) +
+            (str.index_of(alpha, str.chr(bytes[i+2])) << 6) +
+            str.index_of(alpha, str.chr(bytes[i+3]));
+        for(rw val j = 16; j >= 0; j -= 8) {
+            val char = str.chr((chunk >> j) & 0xff);
+            dec += char;
+        }
+    }
+    ret str.sub(dec, 0, #dec - pad);
+};

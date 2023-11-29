@@ -1,0 +1,20 @@
+ret fn(s) {
+    if(s !is String) -> nil;
+
+    val alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    rw val enc = "";
+    rw val bytes = str.bytes(s);
+
+    // Handle padding
+    val pad = #bytes % 3 == 0 ? 0 : 3 - (#bytes % 3);
+    while((#bytes % 3) != 0) arr.push(bytes, 0);
+
+    for(rw val i = 0; i < #s; i += 3) {
+        val chunk = (bytes[i] << 16) + (bytes[i+1] << 8) + bytes[i+2];
+        for(rw val j = 18; j >= 0; j -= 6) {
+            val index = (chunk >> j) & 63;
+            enc += alpha[index];
+        }
+    }
+    ret str.sub(enc, 0, #enc - pad) + str.repeat("=",pad);
+};
