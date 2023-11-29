@@ -26,13 +26,6 @@ loc fn log_case(case, result, expected) {
     arr.push(__logged_test_cases, {case: case, result: result, expected: expected});
 }
 
-loc fn equals(a,b) {
-    if(typeof(a) != typeof(b)) -> false;
-
-    if(a is Array) -> compare_array(a,b);
-    ret a == b;
-}
-
 loc fn compare_array(a, b) {
     if(a !is Array || b !is Array) -> false;
     if(#a != #b) -> false;
@@ -40,6 +33,13 @@ loc fn compare_array(a, b) {
         if(v != b[i]) -> false;
     }
     ret true;
+}
+
+loc fn equals(a,b) {
+    if(typeof(a) != typeof(b)) -> false;
+
+    if(a is Array) -> compare_array(a,b);
+    ret a == b;
 }
 
 loc fn print_cases() {
@@ -67,7 +67,7 @@ loc fn print_cases() {
     __logged_test_cases = array(0);
 }
 
-fn end_tests() {
+loc fn end_tests() {
     rw val rgb = RESULT_PASS_RGB;
     if(failed_tests > 0) {
         rgb = RESULT_FAIL_RGB;
