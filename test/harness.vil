@@ -21,7 +21,7 @@ loc fn print_section(section) {
 }
 
 loc fn log_case(case, result, expected) {
-    __logged_test_cases ??= array(0);
+    __logged_test_cases ??= array(0); // FIXME: This has to be a global right now, EVIL kinda dislikes assignments to top-level-declared arrays
     total_tests++;
     arr.push(__logged_test_cases, {case: case, result: result, expected: expected});
 }
