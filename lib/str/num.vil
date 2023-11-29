@@ -1,0 +1,22 @@
+ret fn(rw num, rw base=10) {
+    if(num !is Number || num == Infinity || base !is Number || base == Infinity) -> nil;
+    num = math.floor(num);
+    base = math.floor(base);
+
+    val alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+    if(base < 2 || base > #alphabet) -> nil;
+    if(num == 0) -> "0";
+
+    rw val negative = num < 0;
+    rw val quo = math.abs(num);
+    rw val mod = 1;
+    rw val res = "";
+    while(quo > 0) {
+        mod = quo % base;
+        quo = math.floor(quo/base);
+        res = alphabet[mod] + res;
+    }
+    if(negative)
+        res = "-" + res;
+    ret res;
+};

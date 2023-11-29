@@ -1,0 +1,110 @@
+val anvil = dofile("../init.vil");
+val harness = require("harness");
+
+harness.print_title("anvil.str.num()");
+
+harness.print_section("Basic Usage - No Base Parameter");
+harness.log_case("Positive Integer", anvil.str.num(10), "10");
+harness.log_case("Negative Integer", anvil.str.num(-10), "-10");
+harness.log_case("Zero", anvil.str.num(0), "0");
+harness.print_cases();
+
+harness.print_section("Basic Usage - Base 8");
+harness.log_case("Positive Integer (below base)", anvil.str.num(7,8), "7");
+harness.log_case("Positive Integer (above base)", anvil.str.num(10,8), "12");
+harness.log_case("Negative Integer (below base)", anvil.str.num(-7,8), "-7");
+harness.log_case("Negative Integer (above base)", anvil.str.num(-10,8), "-12");
+harness.log_case("Zero", anvil.str.num(0), "0");
+harness.print_cases();
+
+harness.print_section("Basic Usage - Base 16");
+harness.log_case("Positive Integer (below base)", anvil.str.num(8,16), "8");
+harness.log_case("Positive Integer (above base)", anvil.str.num(31,16), "1f");
+harness.log_case("Negative Integer (below base)", anvil.str.num(-8,16), "-8");
+harness.log_case("Negative Integer (above base)", anvil.str.num(-31,16), "-1f");
+harness.log_case("Zero", anvil.str.num(0), "0");
+harness.print_cases();
+
+harness.print_section("Edge Cases - Value Parameter");
+harness.log_case("Decimal", anvil.str.num(7/3), "2");
+harness.log_case("Infinity", anvil.str.num(Infinity), nil);
+harness.log_case("nil", anvil.str.num(nil), nil);
+harness.log_case("Non-number", anvil.str.num("abc"), nil);
+harness.print_cases();
+
+harness.print_section("Edge Cases - Base Parameter");
+harness.log_case("Decimal", anvil.str.num(10,7/3), "1010");
+harness.log_case("Infinity", anvil.str.num(10,Infinity), nil);
+harness.log_case("nil", anvil.str.num(10,nil), nil);
+harness.log_case("Non-number", anvil.str.num(10,"abc"), nil);
+harness.log_case("One", anvil.str.num(10,1), nil);
+harness.log_case("Zero", anvil.str.num(10,0), nil);
+harness.log_case("Negative", anvil.str.num(10,-1), nil);
+harness.print_cases();
+
+
+
+harness.print_title("anvil.str.count()");
+
+harness.print_section("Basic Usage");
+harness.log_case("Single Character", anvil.str.cnt("abcd","a"), 1);
+harness.log_case("Multi-Character", anvil.str.cnt("abcd","ab"), 1);
+harness.log_case("Multi-Occurrence Single Character", anvil.str.cnt("ababab","a"), 3);
+harness.log_case("Multi-Occurrence Multi-Character", anvil.str.cnt("ababab","ab"), 3);
+harness.print_cases();
+
+harness.print_section("Edge Cases");
+harness.log_case("Empty String", anvil.str.cnt("","a"), 0);
+harness.log_case("Empty Pattern", anvil.str.cnt("abcd",""), 0);
+harness.log_case("Non-String Base", anvil.str.cnt(123,"a"), nil);
+harness.log_case("Non-String Pattern", anvil.str.cnt("abcd",123), nil);
+harness.print_cases();
+
+
+
+harness.print_title("anvil.str.enc.b64enc()");
+
+harness.print_section("Basic Usage");
+harness.log_case("Modulo 3-Length String", anvil.str.enc.b64enc("b64enc"), "YjY0ZW5j");
+harness.log_case("Arbitrary String", anvil.str.enc.b64enc("b64encpads"), "YjY0ZW5jcGFkcw==");
+harness.log_case("Long String", anvil.str.enc.b64enc("This is some long random string to test some EVIL stuff."), "VGhpcyBpcyBzb21lIGxvbmcgcmFuZG9tIHN0cmluZyB0byB0ZXN0IHNvbWUgRVZJTCBzdHVmZi4=");
+harness.print_cases();
+
+harness.print_section("Edge Cases");
+harness.log_case("Empty String", anvil.str.enc.b64enc(""), "");
+harness.log_case("Non-String", anvil.str.enc.b64enc(123), nil);
+harness.print_cases();
+
+
+
+harness.print_title("anvil.str.enc.b64dec()");
+
+harness.print_section("Basic Usage");
+harness.log_case("Modulo 3-Length String", anvil.str.enc.b64dec("YjY0ZW5j"), "b64enc");
+harness.log_case("Padded String", anvil.str.enc.b64dec("YjY0ZW5jcGFkcw=="), "b64encpads");
+harness.print_cases();
+
+harness.print_section("Edge Cases");
+harness.log_case("Non-explicit Padded String", anvil.str.enc.b64dec("YjY0ZW5jcGFkcw"), "b64encpads");
+harness.log_case("Empty String", anvil.str.enc.b64dec(""), "");
+harness.log_case("Non-String", anvil.str.enc.b64dec(123), nil);
+harness.print_cases();
+
+
+
+harness.print_title("anvil.str.clr.rgb()");
+
+harness.print_section("Basic Usage");
+harness.log_case("Basic String", anvil.str.clr.rgb("abc", 0, 0, 0), "\x001b[38;2;0;0;0mabc\x001b[0m");
+harness.log_case("Empty String", anvil.str.clr.rgb("", 0, 0, 0), "");
+harness.log_case("Non-string value", anvil.str.clr.rgb(123, 100, 100, 100), "\x001b[38;2;100;100;100m123\x001b[0m");
+harness.log_case("Multiple Colors", anvil.str.clr.rgb("a" + anvil.str.clr.rgb("b", 255, 255, 255) + "c", 0, 0, 0), "\x001b[38;2;0;0;0ma\x001b[38;2;255;255;255mb\x001b[0m\x001b[38;2;0;0;0mc\x001b[0m");
+harness.print_cases();
+
+harness.print_section("Edge Cases");
+harness.log_case("RGB > 255", anvil.str.clr.rgb("abc", 1000, 1000, 1000), "abc");
+harness.log_case("RGB < 0", anvil.str.clr.rgb("abc", -1, -2, -3), "abc");
+harness.log_case("Non-number RGB", anvil.str.clr.rgb("abc", "def", "ghi", "jkl"), "abc");
+harness.print_cases();
+
+harness.end_tests();

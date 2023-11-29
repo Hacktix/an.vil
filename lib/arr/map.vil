@@ -1,0 +1,9 @@
+ret fn(a,mapfun) {
+    if(a !is Array || mapfun !is Function) -> nil;
+
+    val res = array(0);
+    each(rw val i,v : a) {
+        arr.push(res, mapfun(v,i));
+    }
+    ret res;
+};
