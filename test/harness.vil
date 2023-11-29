@@ -9,6 +9,7 @@ val RESULT_FAIL_RGB = array() {200, 0, 0};
 
 rw val total_tests = 0;
 rw val failed_tests = 0;
+rw val logged_test_cases = array(0);
 
 loc fn print_title(title) {
     io.println();
@@ -21,9 +22,8 @@ loc fn print_section(section) {
 }
 
 loc fn log_case(case, result, expected) {
-    __logged_test_cases ??= array(0); // FIXME: This has to be a global right now, EVIL kinda dislikes assignments to top-level-declared arrays
     total_tests++;
-    arr.push(__logged_test_cases, {case: case, result: result, expected: expected});
+    arr.push(logged_test_cases, {case: case, result: result, expected: expected});
 }
 
 loc fn compare_array(a, b) {
@@ -44,13 +44,13 @@ loc fn equals(a,b) {
 
 loc fn print_cases() {
     rw val pad_target_len = 0;
-    each(rw val _,c : __logged_test_cases) {
+    each(rw val _,c : logged_test_cases) {
         if(pad_target_len < #c.case)
             pad_target_len = #c.case;
     }
     
     rw val passed = 0;
-    each(rw val i,c : __logged_test_cases) {
+    each(rw val i,c : logged_test_cases) {
         val title = str.rpad(c.case, " ", pad_target_len);
         io.print("  * " + title + " -> ");
         if(equals(c.result, c.expected)) {
@@ -62,9 +62,9 @@ loc fn print_cases() {
             failed_tests++;
         }
     }
-    io.println(fmt.italic(clr.rgb(" >> Passed " + @passed + " of " + @#__logged_test_cases + " tests.", SECTION_END_RGB[0], SECTION_END_RGB[1], SECTION_END_RGB[2])));
+    io.println(fmt.italic(clr.rgb(" >> Passed " + @passed + " of " + @#logged_test_cases + " tests.", SECTION_END_RGB[0], SECTION_END_RGB[1], SECTION_END_RGB[2])));
     io.println();
-    __logged_test_cases = array(0);
+    logged_test_cases = array(0);
 }
 
 loc fn end_tests() {
